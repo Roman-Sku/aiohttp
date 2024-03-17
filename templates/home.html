@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container w-100 h-100">
+    <h1>
+    Теперь это aiohttp
+    </h1>
+
+    <h4>{{ user }}, добро пожаловать!</h4>
+
+    <div class="d-flex">
+        {% for post in posts %}
+            <div class="card shadow p-4">
+
+                <h5>{{ post.title }}</h5>
+                <p>{{ post.content }}</p>
+                <a href="/notes/update/{{post.id}}" class="btn btn-primary btn-sm">Редактировать заметку</a>
+
+            </div>
+        {% endfor %}
+    </div>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="form-signin w-50 m-auto">
+
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+  <h1 class="h3 mb-3 fw-normal">Создайте заметку</h1>
+
+    <form method="post">
+
+        <div class="form-floating">
+          <input type="text" name="title" class="form-control" id="floatingInput">
+          <label for="floatingInput">Заголовок</label>
+        </div>
+        <div class="form-floating">
+          <textarea id="floatingContent" class="form-control" rows="11" name="content"></textarea>
+          <label for="floatingContent">Содержимое</label>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Создать</button>
+
+    </form>
+</main>
+{% endblock %}
