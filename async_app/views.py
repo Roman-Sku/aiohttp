@@ -28,25 +28,18 @@ class NoteRedactView(web.View):
         post_data = await self.request.post()
         action = post_data.get('action')
         post = None
-        if action == "redact":
-            if post_id != -1:
-                title = post_data.get('title', '')
-                content = post_data.get('content', '')
-                user_id = int(post_data.get('user_id', -1))
-                updated_post = await Post.update(post_id=post_id, title=title, content=content, user_id=user_id)
-                if updated_post:
-                    raise web.HTTPFound(f"/")
-                else:
-                    post = await Post.get_by_id(post_id)
-            if not post:
-                post = await Post.get_by_id(post_id)
-            return {"post": post, "error": "Не удалось обновить заметку."}
-        elif action == "delete":
-            deleted_post = await Post.delete(post_id=post_id)
-            if deleted_post:
-                raise web.HTTPFound(f'/')
+        if post_id != -1:
+            title = post_data.get('title', '')
+            content = post_data.get('content', '')
+            user_id = int(post_data.get('user_id', -1))
+            updated_post = await Post.update(post_id=post_id, title=title, content=content, user_id=user_id)
+            if updated_post:
+                raise web.HTTPFound(f"/")
             else:
-                return {"post": deleted_post, "error": "не удалось удалить заметку"}
+                post = await Post.get_by_id(post_id)
+        if not post:
+            post = await Post.get_by_id(post_id)
+        return {"post": post, "error": "Не удалось обновить заметку."}
 
 
 class NoteCreateView(web.View):
