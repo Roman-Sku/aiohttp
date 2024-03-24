@@ -58,6 +58,17 @@ class NoteCreateView(web.View):
         raise web.HTTPFound("/")
 
 
+class NoteDeleteView(web.View):
+    @template("notes/redact.html")
+    async def post(self):
+        post_id = int(self.request.match_info.get('post_id', -1))
+        deleted_post = await Post.delete(post_id=post_id)
+        if deleted_post:
+            raise web.HTTPFound(f'/')
+        else:
+            return {"post": deleted_post, "error": "Не удалось удалить заметку."}
+
+
 class RegisterView(web.View):
     @template("account/register.html")
     async def get(self):
