@@ -20,6 +20,8 @@ class NoteRedactView(web.View):
     async def get(self):
         post_id = int(self.request.match_info.get('post_id', -1))
         post = await Post.get_by_id(post_id)
+        if post.user != self.request.user:
+            raise web.HTTPForbidden()
         return {"post": post}
 
     @template("notes/update.html")
@@ -63,8 +65,12 @@ class NoteDeleteView(web.View):
     async def post(self):
         post_id = int(self.request.match_info.get('post_id', -1))
         deleted_post = await Post.delete(post_id=post_id)
-        if deleted_post:
-            raise web.HTTPFound(f'/')
+        post = await Post.get_by_id(post_id)
+        if post.user != self.request.user:
+            if deleted_post:
+                raise web.HTTPFound(f'/')
+            else:
+                return {"post": deleted_post, "error": "Не удалось удалить заметку."}
         else:
             return {"post": deleted_post, "error": "Не удалось удалить заметку."}
 

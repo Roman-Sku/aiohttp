@@ -25,8 +25,11 @@
         <br>
         <br>
 
-        <button name="action" value="delete"  class="btn btn-primary w-100 py-2" type="submit">Удалить</button>
-
     </form>
+
+    <form method="post" action="/notes/delete/{post_id}">
+        <button class="btn btn-primary py-2" type="submit" >Удалить</button>
+    </form>
+
 </main>
 {% endblock %}

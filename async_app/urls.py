@@ -8,4 +8,5 @@ routes = [
     web.route("*", "/register", handler=views.RegisterView),
     web.route("*", "/notes/create", handler=views.NoteCreateView),
     web.route("*", "/notes/update/{post_id}", handler=views.NoteRedactView),
+    web.post("*", "/notes/delete/{post_id}", handler=views.NoteDeleteView)
 ]
